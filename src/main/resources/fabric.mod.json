@@ -19,13 +19,13 @@
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "keepthatmusic.mixins.json"
   ],
 
   "depends": {
     "fabricloader": ">=0.13.0",
     "minecraft": ">=1.16.0",
-    "java": ">=17"
+    "java": ">=8"
   },
   "suggests": {
     "another-mod": "*"
