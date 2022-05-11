@@ -8,7 +8,7 @@
   "client": [
     "MusicTrackerMixin",
     "MusicSoundMixin",
-    "SoundSystemMixin"
+    "MinecraftClientMixin"
   ],
   "injectors": {
     "defaultRequire": 1

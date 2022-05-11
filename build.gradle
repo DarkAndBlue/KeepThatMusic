@@ -17,10 +17,10 @@ repositories {
 	// See https://docs.gradle.org/current/userguide/declaring_repositories.html
 	// for more information about repositories.
 
-	maven {
-		name = "Gegy's Maven"
-		url = "https://maven.gegy.dev/"
-	}
+//	maven {
+//		name = "Gegy's Maven"
+//		url = "https://maven.gegy.dev/"
+//	}
 }
 
 dependencies {
@@ -29,8 +29,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-
-	modImplementation "supercoder79:databreaker:0.2.9"
+//	modImplementation "supercoder79:databreaker:0.2.9"
 }
 
 processResources {

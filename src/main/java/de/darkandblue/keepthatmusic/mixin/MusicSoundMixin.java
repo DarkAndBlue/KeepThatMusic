@@ -9,6 +9,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MusicSound.class)
 public class MusicSoundMixin {
+  // when the current music location doesn't fit your new music location it will be replaced
+  // For example when switching from title screen to ingame
   @Inject(method = "shouldReplaceCurrentMusic", at = @At("HEAD"), cancellable = true)
   public void shouldReplaceCurrentMusic(CallbackInfoReturnable<Boolean> ci) {
     if (KeepThatMusic.DEBUG) {

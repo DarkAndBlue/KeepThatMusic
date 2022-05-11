@@ -9,6 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MusicTracker.class)
 public class MusicTrackerMixin {
+  // when a respawn packet comes in (respawn packet is also used for dimension switching)
   @Inject(method = "stop", at = @At("HEAD"), cancellable = true)
   public void interruptStopMusicOnWorldSwitch(CallbackInfo ci) {
     if (KeepThatMusic.DEBUG) {
