@@ -4,13 +4,15 @@
   "version": "${version}",
 
   "name": "Keep That Music",
-  "description": "Keep That Music Mod",
+  "description": "Keep That Music Mod stops Minecraft from interrupting music when switching worlds/servers.",
   "authors": [
     "DarkAndBlue"
   ],
 
   "license": "CC0-1.0",
   "icon": "assets/modid/icon.png",
+
+  "issues": "https://github.com/DarkAndBlue/KeepThatMusic/issues",
 
   "environment": "*",
   "entrypoints": {
