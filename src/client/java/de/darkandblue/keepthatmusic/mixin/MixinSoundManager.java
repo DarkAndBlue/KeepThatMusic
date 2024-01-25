@@ -2,8 +2,6 @@ package de.darkandblue.keepthatmusic.mixin;
 
 import de.darkandblue.keepthatmusic.KeepThatMusic;
 import de.darkandblue.keepthatmusic.interfaces.IMixinSoundManager;
-import de.darkandblue.keepthatmusic.interfaces.IMixinSoundSystem;
-import net.minecraft.client.sound.Channel;
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.SoundSystem;
 import org.spongepowered.asm.mixin.Final;

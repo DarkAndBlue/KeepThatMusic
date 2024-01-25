@@ -1,8 +1,6 @@
 package de.darkandblue.keepthatmusic.mixin;
 
 import de.darkandblue.keepthatmusic.KeepThatMusic;
-import de.darkandblue.keepthatmusic.interfaces.IMixinSoundManager;
-import de.darkandblue.keepthatmusic.interfaces.IMixinSoundSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.Channel;
 import net.minecraft.client.sound.MusicTracker;
@@ -15,9 +13,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mixin(MusicTracker.class)
 public class MixinMusicTracker {
