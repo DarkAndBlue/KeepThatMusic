@@ -1,35 +1,41 @@
 {
-  "schemaVersion": 1,
-  "id": "keepthatmusic",
-  "version": "${version}",
-
-  "name": "Keep That Music",
-  "description": "Keep That Music Mod stops Minecraft from interrupting music when switching worlds/servers.",
-  "authors": [
-    "DarkAndBlue"
-  ],
-
-  "license": "CC0-1.0",
-  "icon": "assets/modid/icon.png",
-
-  "issues": "https://github.com/DarkAndBlue/KeepThatMusic/issues",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "de.darkandblue.keepthatmusic.KeepThatMusic"
-    ]
-  },
-  "mixins": [
-    "keepthatmusic.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.13.0",
-    "minecraft": ">=1.16.0",
-    "java": ">=8"
-  },
-  "suggests": {
-    "another-mod": "*"
-  }
+	"schemaVersion": 1,
+	"id": "modid",
+	"version": "${version}",
+	"name": "Example mod",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/modid/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.example.ExampleMod"
+		],
+		"client": [
+			"de.darkandblue.keepthatmusic.KeepThatMusic"
+		]
+	},
+	"mixins": [
+		"modid.mixins.json",
+		{
+			"config": "modid.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.15.0",
+		"minecraft": "~1.20.4",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
 }

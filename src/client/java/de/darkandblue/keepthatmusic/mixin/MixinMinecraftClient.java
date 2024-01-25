@@ -8,11 +8,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(MinecraftClient.class)
-public class MinecraftClientMixin {
+public class MixinMinecraftClient {
   @Redirect(method = "reset", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/sound/SoundManager;stopAll()V"))
-  private void injected(SoundManager instance) {
+  private void reset(SoundManager instance) {
     if(KeepThatMusic.DEBUG) {
-      System.out.println("SoundManager reset" + Math.random());
+      System.out.println("MinecraftClient().reset.stopAll() " + Math.random());
     }
   }
 }

@@ -6,9 +6,11 @@
   "mixins": [
   ],
   "client": [
-    "MusicTrackerMixin",
-    "MusicSoundMixin",
-    "MinecraftClientMixin"
+    "MixinMinecraftClient",
+    "MixinMusicSound",
+    "MixinMusicTracker",
+    "MixinSoundManager",
+    "MixinSoundSystem"
   ],
   "injectors": {
     "defaultRequire": 1
