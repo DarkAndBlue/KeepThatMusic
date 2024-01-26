@@ -1,6 +1,6 @@
 # Keep That Music
 
-<img src="src/client/resources/assets/keepthatmusic/icon.png" alt="drawing" width="220px" style="image-rendering: pixelated;"/>
+![](.github/icon.png)
 
 * ### [🔗 Modrinth Page](https://modrinth.com/mod/keepthatmusic)
 * ### [🔗 CurseForge Page](https://www.curseforge.com/minecraft/mc-mods/keep-that-music)
