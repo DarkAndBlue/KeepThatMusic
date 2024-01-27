@@ -9,7 +9,8 @@
 This mod stops Minecraft from interrupting music when you switch worlds, or go back to title screen.
 
 ## Known bugs
-- Every sound keeps playing when you leave a server not only music (Which is hard to notice)
+- Every sound keeps playing when you leave a server not only music
+- When creating a new world the music stops playing
 
 ## Future plans:
 - Save music state when they are stopped and resume them manually
