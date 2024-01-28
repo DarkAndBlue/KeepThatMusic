@@ -12,11 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(MusicTracker.class)
 public class MixinMusicTracker {
-	@Shadow
-	private SoundInstance current;
-	@Final
-	@Shadow
-	private MinecraftClient client;
+//	@Shadow
+//	private SoundInstance current;
+//	@Final
+//	@Shadow
+//	private MinecraftClient client;
 	
 //	SoundSystem lastSoundSystem;
 //	Channel.SourceManager lastSourceManager;

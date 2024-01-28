@@ -26,7 +26,7 @@ public class MixinMusicSound {
   @Inject(method = "getMaxDelay", at = @At("HEAD"), cancellable = true)
   public void getMaxDelay(CallbackInfoReturnable<Integer> ci) {
     if (KeepThatMusic.DEBUG) {
-//      System.out.println("MusicSound.shouldReplaceCurrentMusic() " + Math.random());
+//      System.out.println("MusicSound.getMaxDelay() " + Math.random());
     }
     if(KeepThatMusic.MAX_MUSIC_DELAY != -1) {
       ci.setReturnValue(KeepThatMusic.MAX_MUSIC_DELAY);

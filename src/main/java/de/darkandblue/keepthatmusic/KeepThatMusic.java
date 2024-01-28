@@ -9,6 +9,5 @@ public class KeepThatMusic implements ClientModInitializer {
   
   @Override
   public void onInitializeClient() {
-    
   }
 }
