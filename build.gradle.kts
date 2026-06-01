@@ -23,7 +23,13 @@ val requiredJava: JavaVersion = when {
 }
 
 repositories {
-    maven("https://maven.terraformersmc.com/releases/") { name = "TerraformersMC" }
+    // Mod Menu is fetched from Modrinth's maven. maven.terraformersmc.com sits behind a CDN that
+    // intermittently returns HTTP 400 to Gradle (works in a browser), which fails CI at random;
+    // Modrinth's maven is reliable. Scoped to its own group so it isn't probed for anything else.
+    exclusiveContent {
+        forRepository { maven("https://api.modrinth.com/maven") { name = "Modrinth" } }
+        filter { includeGroup("maven.modrinth") }
+    }
 }
 
 dependencies {
@@ -37,7 +43,7 @@ dependencies {
     // integration; pulled non-transitively so it does not drag in Fabric API.
     val modmenu = sc.properties.rawOrNull("deps", "modmenu")
     if (modmenu != null) {
-        modCompileOnly("com.terraformersmc:modmenu:$modmenu") { isTransitive = false }
+        modCompileOnly("maven.modrinth:modmenu:$modmenu") { isTransitive = false }
     }
 }
 

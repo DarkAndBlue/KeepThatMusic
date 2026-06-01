@@ -21,7 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ "1.16.5", "1.18.2", "1.19.2", "1.20.1", "1.21.1", "1.21.11", "26.1" ]
+        # Three distributable jars; each covers a range of Minecraft versions (see mod.mc_compat).
+        node: [ "1.16.5", "1.21.11", "26.1" ]
     steps:
       - uses: actions/checkout@v4
 

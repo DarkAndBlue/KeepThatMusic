@@ -1,3 +1,4 @@
+//? if >=1.20 {
 package de.darkandblue.keepthatmusic.modmenu;
 
 import de.darkandblue.keepthatmusic.config.KeepThatMusicConfig;
@@ -6,19 +7,17 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
 /**
- * A small hand-built settings screen (no ClothConfig dependency, so it works uniformly across every
- * supported Minecraft version). Only {@link #init()} is overridden — the buttons carry their own
- * labels, so we avoid the version-churny {@code render(...)} signature entirely.
- *
- * <p>The three cross-version GUI differences (text factory, button factory, widget registration)
- * are isolated into the helpers below behind Stonecutter {@code //?} branches.
+ * Hand-built settings screen (no ClothConfig dependency). Only shipped on modern versions
+ * (>=1.20), where the GUI API is stable (Component.literal / Button.builder / addRenderableWidget),
+ * so it needs no per-version branching. On the legacy jar there is no screen — the mod is
+ * configured via {@code config/keepthatmusic.json}.
  */
 public class KeepThatMusicConfigScreen extends Screen {
   private final Screen parent;
   private final KeepThatMusicConfig config = KeepThatMusicConfig.get();
 
   public KeepThatMusicConfigScreen(Screen parent) {
-    super(literal("Keep That Music"));
+    super(Component.literal("Keep That Music"));
     this.parent = parent;
   }
 
@@ -27,26 +26,27 @@ public class KeepThatMusicConfigScreen extends Screen {
     int x = this.width / 2 - 100;
     int y = this.height / 4;
 
-    addWidget(makeButton(x, y, 200, 20, enabledLabel(), b -> {
+    addRenderableWidget(Button.builder(enabledLabel(), b -> {
       config.enabled = !config.enabled;
       b.setMessage(enabledLabel());
-    }));
+    }).bounds(x, y, 200, 20).build());
 
-    addWidget(makeButton(x, y + 24, 200, 20, delayLabel(), b -> {
+    addRenderableWidget(Button.builder(delayLabel(), b -> {
       config.maxMusicDelay = cycleDelay(config.maxMusicDelay);
       b.setMessage(delayLabel());
-    }));
+    }).bounds(x, y + 24, 200, 20).build());
 
-    addWidget(makeButton(x, y + 60, 200, 20, literal("Done"), b -> onClose()));
+    addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
+        .bounds(x, y + 60, 200, 20).build());
   }
 
   private Component enabledLabel() {
-    return literal("Mod: " + (config.enabled ? "Enabled" : "Disabled"));
+    return Component.literal("Mod: " + (config.enabled ? "Enabled" : "Disabled"));
   }
 
   private Component delayLabel() {
     String value = config.maxMusicDelay == -1 ? "Vanilla" : config.maxMusicDelay + " ticks";
-    return literal("Max music delay: " + value);
+    return Component.literal("Max music delay: " + value);
   }
 
   /** Cycles through a few useful presets: Vanilla -> 0 -> 100 -> 1200 -> Vanilla. */
@@ -66,33 +66,5 @@ public class KeepThatMusicConfigScreen extends Screen {
       minecraft.setScreen(parent);
     }
   }
-
-  // --- cross-version GUI helpers ------------------------------------------------------------
-
-  /** Text component factory: {@code Component.literal} (1.19+) vs {@code new TextComponent} (older). */
-  private static Component literal(String text) {
-    //? if >=1.19 {
-    return Component.literal(text);
-    //?} else {
-    /*return new net.minecraft.network.chat.TextComponent(text);*/
-    //?}
-  }
-
-  /** Button factory: builder (1.20+) vs the legacy constructor (older). */
-  private Button makeButton(int x, int y, int w, int h, Component msg, Button.OnPress onPress) {
-    //? if >=1.20 {
-    return Button.builder(msg, onPress).bounds(x, y, w, h).build();
-    //?} else {
-    /*return new Button(x, y, w, h, msg, onPress);*/
-    //?}
-  }
-
-  /** Widget registration: {@code addRenderableWidget} (1.17+) vs {@code addButton} (1.16). */
-  private void addWidget(Button button) {
-    //? if >=1.17 {
-    addRenderableWidget(button);
-    //?} else {
-    /*addButton(button);*/
-    //?}
-  }
 }
+//?}

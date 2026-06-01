@@ -1,18 +1,19 @@
 //? if modmenu {
 package de.darkandblue.keepthatmusic.modmenu;
 
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
 import com.terraformersmc.modmenu.api.ModMenuApi;
 
 /**
- * Registers the config screen with Mod Menu. Only compiled on nodes that pin a Mod Menu build
- * (the {@code modmenu} Stonecutter constant); harmless if Mod Menu is not installed at runtime
- * because the loader simply ignores the entrypoint.
+ * Registers the mod with Mod Menu. Present on every version so the {@code modmenu} entrypoint in
+ * fabric.mod.json always resolves. On modern versions (>=1.20) it returns the config screen; on the
+ * legacy jar it falls back to Mod Menu's default (no config button — configure via the JSON file).
  */
 public class ModMenuIntegration implements ModMenuApi {
+  //? if >=1.20 {
   @Override
-  public ConfigScreenFactory<?> getModConfigScreenFactory() {
+  public com.terraformersmc.modmenu.api.ConfigScreenFactory<?> getModConfigScreenFactory() {
     return KeepThatMusicConfigScreen::new;
   }
+  //?}
 }
 //?}

@@ -17,35 +17,43 @@ Open **Mod Menu → Keep That Music** to:
 Settings are saved to `config/keepthatmusic.json`.
 
 ## Supported versions
-A single codebase is built for multiple Minecraft versions via
-[Stonecutter](https://stonecutter.kikugie.dev/): **1.16.5, 1.18.2, 1.19.2, 1.20.1, 1.21.1, 1.21.11
-and 26.1.2+**. From 26.1 onward Minecraft ships unobfuscated, so all versions are built against
-Mojang mappings.
+A single codebase (via [Stonecutter](https://stonecutter.kikugie.dev/)) produces **three jars**,
+each covering a *range* of Minecraft versions — because most of the game internals the mod touches
+are stable across versions (Fabric intermediary mappings bridge them):
 
-Minimum Java is **8** (Minecraft 1.16's runtime); newer versions require newer Java (17 for
-1.18–1.20.4, 21 for 1.21.x, 25 for 26.1), handled automatically per build.
+| Jar (build target) | Covers | Config screen | Mappings |
+|---|---|---|---|
+| `1.16.5` (legacy)  | `>=1.16 <1.21.2` | no (JSON file only) | intermediary |
+| `1.21.11`          | `>=1.21.2 <1.22` | yes | intermediary |
+| `26.1`             | `~26.1` (unobfuscated) | yes | official Mojang |
+
+The legacy jar is built at Java 8 with no config screen, so nothing forces it to split across the
+old range. The splits exist only where the game genuinely changed: `Music` became a record
+(`getMaxDelay`→`maxDelay`) in 1.21.2, `SoundManager.pause()` was removed in 1.21.11, and 26.1 dropped
+obfuscation entirely. Minimum Java is **8** (Minecraft 1.16's runtime).
 
 ### Building / running all tests
 ```
-./gradlew buildAll                 # build + process mixins + remap EVERY supported version
-./gradlew ":1.21.1:build"          # build a single version
-./gradlew ":1.21.1:runClient"      # launch the game on a version to test in-game
+./gradlew buildAll                 # build all three jars (compile + mixins + remap)
+./gradlew ":1.16.5:build"          # build a single target
+./gradlew ":1.21.11:runClient"     # launch the game on a target to test in-game
 ```
 In the IntelliJ Gradle panel, `buildAll` is under the root project's **build** group, and each
-version's `runClient` is under that subproject's **fabric** group. The headless runtime tests are
+target's `runClient` is under that subproject's **fabric** group. The headless runtime tests are
 **not** Gradle tasks — they live in `.github/workflows/ci.yml` and run on GitHub Actions.
 
 ### Testing
 `.github/workflows/ci.yml` runs on every push/PR:
-- **build** — compiles + processes mixins + remaps each of the 7 versions.
+- **build** — compiles + processes mixins + remaps each of the three jars.
 - **runtime** — boots the real client headlessly via
   [MC-Runtime-Test](https://github.com/headlesshq/mc-runtime-test) (HeadlessMC + Xvfb): joins a
-  single-player world, then quits. This catches runtime mixin-apply failures that a compile check
-  cannot, and exercises the mod's disconnect/shutdown paths.
+  single-player world, runs `/playsound`, then quits. The legacy jar is run against several
+  Minecraft versions to prove one jar spans the range. This catches runtime mixin-apply failures a
+  compile check cannot.
 
 ### Downloadable jars
-`.github/workflows/artifacts.yml` builds the final mod jar for every version and uploads them as
-GitHub Actions artifacts (one per version, sources excluded). Download them from the **Actions** tab
+`.github/workflows/artifacts.yml` builds the three final mod jars and uploads them as
+GitHub Actions artifacts (one per build target, sources excluded). Download them from the **Actions** tab
 → pick a "Build Artifacts" run → **Artifacts** section at the bottom of the summary. Runs on pushes
 to `master`, on `v*` tags, or manually via **Run workflow**. It publishes nowhere external — add a
 publish job to that file later for Modrinth/CurseForge/Releases.

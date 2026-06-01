@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ "1.16.5", "1.18.2", "1.19.2", "1.20.1", "1.21.1", "1.21.11", "26.1" ]
+        node: [ "1.16.5", "1.21.11", "26.1" ]
     steps:
       - uses: actions/checkout@v4
 
@@ -53,20 +53,20 @@ jobs:
   # exactly the class of bug that a compile-only check cannot catch.
   # ---------------------------------------------------------------------------
   runtime-test:
-    name: runtime ${{ matrix.mc }}
+    name: runtime ${{ matrix.node }} jar on ${{ matrix.mc }}
     needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
+        # The single legacy (1.16.5) jar is run against several Minecraft versions to prove it
+        # spans the whole >=1.16 <1.21.2 range; the modern jars are run on their own version.
         include:
-          - { node: "1.18.2",  mc: "1.18.2",  java: "17" }
-          - { node: "1.19.2",  mc: "1.19.2",  java: "17" }
-          - { node: "1.20.1",  mc: "1.20.1",  java: "17" }
-          - { node: "1.21.1",  mc: "1.21.1",  java: "21" }
+          - { node: "1.16.5",  mc: "1.18.2",  java: "17" }
+          - { node: "1.16.5",  mc: "1.20.1",  java: "17" }
+          - { node: "1.16.5",  mc: "1.21.1",  java: "21" }
           - { node: "1.21.11", mc: "1.21.11", java: "21" }
-          # Endpoints HeadlessMC may not support yet — keep them visible but
-          # non-blocking until confirmed working.
+          # Endpoints HeadlessMC may not support yet — keep them visible but non-blocking.
           - { node: "1.16.5",  mc: "1.16.5",  java: "8",  experimental: true }
           - { node: "26.1",    mc: "26.1.2",  java: "25", experimental: true }
     continue-on-error: ${{ matrix.experimental == true }}

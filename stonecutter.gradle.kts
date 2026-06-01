@@ -3,7 +3,7 @@ plugins {
 }
 
 // Node iterated against by default in the IDE / single-version Gradle tasks.
-stonecutter active "1.21.1"
+stonecutter active "1.21.11"
 
 // Aggregate task so it's discoverable in the IDE Gradle panel (root project > "build" group)
 // and runnable as `./gradlew buildAll`: builds every supported Minecraft version at once.

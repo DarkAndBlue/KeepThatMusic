@@ -17,13 +17,16 @@ plugins {
 
 stonecutter {
     create(rootProject) {
-        // Obfuscated (Yarn-era) releases — Mojang mappings are layered on by Loom.
-        // See https://stonecutter.kikugie.dev/wiki/start/#choosing-minecraft-versions
-        versions("1.16.5", "1.18.2", "1.19.2", "1.20.1", "1.21.1", "1.21.11")
-        // De-obfuscated releases ship Mojang mappings natively.
+        // One build per distributable jar. Each jar covers a RANGE of Minecraft versions (declared
+        // by mod.mc_compat in stonecutter.properties.toml), not a single version:
+        //   1.16.5  -> built at Java 8, no config screen, runs across >=1.16 <1.21.2 via
+        //              version-stable Fabric intermediary mappings (like the original mod did).
+        //   1.21.11 -> the modern 1.21 line (Music record + pause() removal), with config screen.
+        //   26.1    -> the un-obfuscated era (official mappings), with config screen.
+        versions("1.16.5", "1.21.11")
         version("26.1", "26.1.2")
-        // Default node to develop/iterate against.
-        vcsVersion = "1.21.1"
+        // Default node to develop/iterate against (a modern node so the config screen is active).
+        vcsVersion = "1.21.11"
     }
 }
 

@@ -17,33 +17,16 @@ loomx.loom_version = "1.16-SNAPSHOT"
 # once published; pinned here to the closest known release.
 # ---------------------------------------------------------------------------
 
+# The 1.16.5 build is the single "legacy" jar: built at Java 8 with no config screen, it runs
+# across the whole pre-record range via version-stable intermediary mappings.
 ["1.16.5"]
-mod.mc_compat = ">=1.16 <1.17"
+mod.mc_compat = ">=1.16 <1.21.2"
 deps.fabric_loader = "0.16.14"
 deps.modmenu = "1.16.23"
 
-["1.18.2"]
-mod.mc_compat = ">=1.18 <1.19"
-deps.fabric_loader = "0.16.14"
-deps.modmenu = "3.2.5"
-
-["1.19.2"]
-mod.mc_compat = ">=1.19 <1.20"
-deps.fabric_loader = "0.16.14"
-deps.modmenu = "4.1.2"
-
-["1.20.1"]
-mod.mc_compat = ">=1.20 <1.20.2"
-deps.fabric_loader = "0.16.14"
-deps.modmenu = "7.2.2"
-
-["1.21.1"]
-mod.mc_compat = ">=1.21 <=1.21.1"
-deps.fabric_loader = "0.16.14"
-deps.modmenu = "11.0.3"
-
+# Modern 1.21 line: Music is a record (maxDelay) and SoundManager.pause() is gone. Has the screen.
 ["1.21.11"]
-mod.mc_compat = "1.21.11"
+mod.mc_compat = ">=1.21.2 <1.22"
 deps.fabric_loader = "0.17.2"
 deps.modmenu = "16.0.0"
 
