@@ -23,10 +23,10 @@ public class MixinMusic {
 
   // Music became a record in 1.21.2, renaming getMaxDelay() -> maxDelay().
   //? if >=1.21.2 {
-  /*@Inject(method = "maxDelay", at = @At("HEAD"), cancellable = true)*/
+  @Inject(method = "maxDelay", at = @At("HEAD"), cancellable = true)
   //?} else {
-  @Inject(method = "getMaxDelay", at = @At("HEAD"), cancellable = true)
-  //?}
+  /*@Inject(method = "getMaxDelay", at = @At("HEAD"), cancellable = true)
+  *///?}
   private void keepThatMusic$getMaxDelay(CallbackInfoReturnable<Integer> cir) {
     KeepThatMusicConfig config = KeepThatMusic.config();
     if (config.enabled && config.maxMusicDelay != -1) {

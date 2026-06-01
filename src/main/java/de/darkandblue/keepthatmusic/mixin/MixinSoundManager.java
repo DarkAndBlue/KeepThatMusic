@@ -46,14 +46,14 @@ public class MixinSoundManager {
   // SoundManager.pause() was removed in 1.21.11 in favour of pauseAllExcept(...), which already
   // keeps music playing through a pause. Only inject on versions that still have pause().
   //? if <1.21.11 {
-  @Inject(method = "pause()V", at = @At("HEAD"), cancellable = true)
+  /*@Inject(method = "pause()V", at = @At("HEAD"), cancellable = true)
   private void keepThatMusic$pause(CallbackInfo ci) {
     if (KeepThatMusic.config().enabled) {
       KeepThatMusic.trace("SoundManager.pause() cancelled");
       ci.cancel();
     }
   }
-  //?}
+  *///?}
 
   private static SoundInstance currentMusic() {
     MusicManager musicManager = Minecraft.getInstance().getMusicManager();
