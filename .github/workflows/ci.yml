@@ -42,13 +42,6 @@ jobs:
       - name: Build ${{ matrix.node }}
         run: ./gradlew ":${{ matrix.node }}:build" --stacktrace
 
-      - name: Upload built jar
-        uses: actions/upload-artifact@v4
-        with:
-          name: keepthatmusic-${{ matrix.node }}
-          path: versions/${{ matrix.node }}/build/libs/*.jar
-          if-no-files-found: error
-
   # ---------------------------------------------------------------------------
   # Boot the real client headlessly (HeadlessMC + Xvfb): the bundled test mod
   # joins a single-player world, waits for chunks, then quits. This exercises
@@ -106,3 +99,6 @@ jobs:
           regex: ".*keepthatmusic.*"
           mc-runtime-test: fabric
           xvfb: true
+          # -Dkeepthatmusic.test=true activates MixinTestDriver, which runs /playsound
+          # once the test world has loaded. A crash there fails the job.
+          headlessmc-command: '--jvm "-Djava.awt.headless=true -Dkeepthatmusic.test=true"'

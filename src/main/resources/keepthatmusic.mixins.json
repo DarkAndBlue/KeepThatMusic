@@ -8,7 +8,8 @@
     "MixinMusic",
     "MixinMusicManager",
     "MixinSoundEngine",
-    "MixinSoundManager"
+    "MixinSoundManager",
+    "MixinTestDriver"
   ],
   "injectors": {
     "defaultRequire": 1
