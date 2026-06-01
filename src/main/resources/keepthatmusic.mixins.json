@@ -2,15 +2,13 @@
   "required": true,
   "minVersion": "0.8",
   "package": "de.darkandblue.keepthatmusic.mixin",
-  "compatibilityLevel": "JAVA_8",
-  "mixins": [
-  ],
+  "compatibilityLevel": "${java}",
   "client": [
-    "MixinMinecraftClient",
-    "MixinMusicSound",
-    "MixinMusicTracker",
-    "MixinSoundManager",
-    "MixinSoundSystem"
+    "MixinMinecraft",
+    "MixinMusic",
+    "MixinMusicManager",
+    "MixinSoundEngine",
+    "MixinSoundManager"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,0 +1,108 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+  workflow_dispatch:
+
+# Cancel superseded runs on the same ref.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ---------------------------------------------------------------------------
+  # Compile + mixin-processing + remap for every supported version.
+  # This is the "does it build" gate across the whole 1.16.5 -> 26.1.2 span.
+  # ---------------------------------------------------------------------------
+  build:
+    name: build ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [ "1.16.5", "1.18.2", "1.19.2", "1.20.1", "1.21.1", "1.21.11", "26.1" ]
+    steps:
+      - uses: actions/checkout@v4
+
+      # Install every JDK the version span needs (8/17/21/25). Gradle runs on 21;
+      # Loom toolchains pick the right one per Minecraft version automatically.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            8
+            17
+            25
+            21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build ${{ matrix.node }}
+        run: ./gradlew ":${{ matrix.node }}:build" --stacktrace
+
+      - name: Upload built jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: keepthatmusic-${{ matrix.node }}
+          path: versions/${{ matrix.node }}/build/libs/*.jar
+          if-no-files-found: error
+
+  # ---------------------------------------------------------------------------
+  # Boot the real client headlessly (HeadlessMC + Xvfb): the bundled test mod
+  # joins a single-player world, waits for chunks, then quits. This exercises
+  # the mod's mixins at runtime (world join, the selective stop-on-disconnect,
+  # and the clean shutdown) and fails the build if any mixin fails to apply —
+  # exactly the class of bug that a compile-only check cannot catch.
+  # ---------------------------------------------------------------------------
+  runtime-test:
+    name: runtime ${{ matrix.mc }}
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { node: "1.18.2",  mc: "1.18.2",  java: "17" }
+          - { node: "1.19.2",  mc: "1.19.2",  java: "17" }
+          - { node: "1.20.1",  mc: "1.20.1",  java: "17" }
+          - { node: "1.21.1",  mc: "1.21.1",  java: "21" }
+          - { node: "1.21.11", mc: "1.21.11", java: "21" }
+          # Endpoints HeadlessMC may not support yet — keep them visible but
+          # non-blocking until confirmed working.
+          - { node: "1.16.5",  mc: "1.16.5",  java: "8",  experimental: true }
+          - { node: "26.1",    mc: "26.1.2",  java: "25", experimental: true }
+    continue-on-error: ${{ matrix.experimental == true }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            8
+            17
+            25
+            21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build ${{ matrix.node }}
+        run: ./gradlew ":${{ matrix.node }}:build" --stacktrace
+
+      - name: Stage mod jar (exclude sources)
+        run: |
+          mkdir -p run/mods
+          find "versions/${{ matrix.node }}/build/libs" -name '*.jar' ! -name '*-sources.jar' -exec cp {} run/mods \;
+          ls -la run/mods
+
+      - name: Headless client smoke test
+        uses: headlesshq/mc-runtime-test@4.4.0
+        with:
+          mc: ${{ matrix.mc }}
+          modloader: fabric
+          java: ${{ matrix.java }}
+          regex: ".*keepthatmusic.*"
+          mc-runtime-test: fabric
+          xvfb: true
