@@ -47,9 +47,11 @@ target's `runClient` is under that subproject's **fabric** group. The headless r
 - **build** — compiles + processes mixins + remaps each of the three jars.
 - **runtime** — boots the real client headlessly via
   [MC-Runtime-Test](https://github.com/headlesshq/mc-runtime-test) (HeadlessMC + Xvfb): joins a
-  single-player world, runs `/playsound`, then quits. The legacy jar is run against several
-  Minecraft versions to prove one jar spans the range. This catches runtime mixin-apply failures a
-  compile check cannot.
+  single-player world, runs `/playsound`, then quits. The legacy jar is run against one
+  representative version from **every generation** in its range (1.18.2, 1.19.4, 1.20.1, 1.20.3,
+  1.20.6, 1.21.1) so a break at any minor update is caught — testing literally every patch is
+  unnecessary because the few internals the mod touches only change at notable refactors. This
+  catches runtime mixin-apply failures a compile check cannot.
 
 ### Downloadable jars
 `.github/workflows/artifacts.yml` builds the three final mod jars and uploads them as
