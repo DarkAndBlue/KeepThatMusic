@@ -1,0 +1,54 @@
+name: Build Artifacts
+
+# Produces the final, runnable mod jar for every supported Minecraft version and uploads them as
+# GitHub Actions artifacts (downloadable from the run's summary page). It does NOT publish anywhere
+# external — to add Modrinth/CurseForge/Releases later, append a publish job here.
+
+on:
+  push:
+    branches: [ master ]
+    tags: [ "v*" ]
+  workflow_dispatch:
+
+concurrency:
+  group: artifacts-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  jar:
+    name: jar ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [ "1.16.5", "1.18.2", "1.19.2", "1.20.1", "1.21.1", "1.21.11", "26.1" ]
+    steps:
+      - uses: actions/checkout@v4
+
+      # The version span needs JDK 8/17/21/25; Gradle runs on 21 and Loom toolchains pick the rest.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: |
+            8
+            17
+            25
+            21
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Build ${{ matrix.node }}
+        run: ./gradlew ":${{ matrix.node }}:build" --stacktrace
+
+      # Upload only the runnable mod jar (exclude the -sources jar).
+      - name: Upload mod jar
+        uses: actions/upload-artifact@v4
+        with:
+          name: keepthatmusic-${{ matrix.node }}
+          path: |
+            versions/${{ matrix.node }}/build/libs/*.jar
+            !versions/${{ matrix.node }}/build/libs/*-sources.jar
+          if-no-files-found: error
