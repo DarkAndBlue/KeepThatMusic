@@ -102,7 +102,9 @@ jobs:
           mc: ${{ matrix.mc }}
           modloader: fabric
           java: ${{ matrix.java }}
-          regex: ".*keepthatmusic.*"
+          # Selects which installed profile HeadlessMC launches (the Fabric one), NOT our mod jar —
+          # our jar is loaded automatically from run/mods.
+          regex: ".*fabric.*"
           mc-runtime-test: fabric
           xvfb: true
           # -Dkeepthatmusic.test=true activates MixinTestDriver, which runs /playsound
