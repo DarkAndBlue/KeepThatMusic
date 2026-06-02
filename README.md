@@ -3,7 +3,7 @@
 ![](.github/icon.png)
 
 * ### [🔗 Modrinth Page](https://modrinth.com/mod/keepthatmusic)
-* ### [🔗 CurseForge Page](https://www.curseforge.com/minecraft/mc-mods/keep-that-music)
+* ### [🔗 CurseForge Page](https://www.curseforge.com/minecraft/mc-mods/keep-that-music) (outdated)
 
 ## What does this mod do?
 This mod stops Minecraft from interrupting music when you switch worlds, or go back to title screen.
