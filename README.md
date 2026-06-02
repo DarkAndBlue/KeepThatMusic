@@ -23,13 +23,13 @@ are stable across versions (Fabric intermediary mappings bridge them):
 
 | Jar (build target) | Covers | Config screen | Mappings |
 |---|---|---|---|
-| `1.16.5` (legacy)  | `>=1.16 <1.21.2` | no (JSON file only) | intermediary |
-| `1.21.11`          | `>=1.21.2 <1.22` | yes | intermediary |
+| `1.16.5` (legacy)  | `>=1.16 <1.21.6` | no (JSON file only) | intermediary |
+| `1.21.11`          | `>=1.21.6 <1.22` | yes | intermediary |
 | `26.1`             | `~26.1` (unobfuscated) | yes | official Mojang |
 
 The legacy jar is built at Java 8 with no config screen, so nothing forces it to split across the
 old range. The splits exist only where the game genuinely changed: `Music` became a record
-(`getMaxDelay`→`maxDelay`) in 1.21.2, `SoundManager.pause()` was removed in 1.21.11, and 26.1 dropped
+(`getMaxDelay`→`maxDelay`) in 1.21.6, `SoundManager.pause()` was removed in 1.21.11, and 26.1 dropped
 obfuscation entirely. Minimum Java is **8** (Minecraft 1.16's runtime).
 
 ### Building / running all tests

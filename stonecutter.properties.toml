@@ -21,14 +21,15 @@ loomx.loom_version = "1.16-SNAPSHOT"
 # across the whole pre-record range (Music is a regular class with stable intermediary method names
 # through 1.21.4) via version-stable intermediary mappings.
 ["1.16.5"]
-mod.mc_compat = ">=1.16 <1.21.5"
+mod.mc_compat = ">=1.16 <1.21.6"
 deps.fabric_loader = "0.16.14"
 deps.modmenu = "1.16.23"
 
-# Modern line (1.21.5+): Music is a record (maxDelay, comp_* names) and SoundManager.pause() is gone.
-# Built at 1.21.11; the record-component intermediary names are stable from 1.21.5 up. Has the screen.
+# Modern line (1.21.6+): Music became a record (maxDelay, comp_* names) at 1.21.6 and
+# SoundManager.pause() is gone by 1.21.11. Built at 1.21.11; the record-component intermediary names
+# we use (comp_4360/comp_4361) are stable across 1.21.6–1.21.11. Has the screen.
 ["1.21.11"]
-mod.mc_compat = ">=1.21.5 <1.22"
+mod.mc_compat = ">=1.21.6 <1.22"
 deps.fabric_loader = "0.17.2"
 deps.modmenu = "16.0.0"
 

@@ -21,9 +21,9 @@ public class MixinMusic {
     }
   }
 
-  // Music became a record in 1.21.5, renaming getMaxDelay() -> maxDelay(). (Before 1.21.5 it is a
-  // regular class with stable intermediary method names, so the legacy jar spans 1.16–1.21.4.)
-  //? if >=1.21.5 {
+  // Music became a record in 1.21.6, renaming getMaxDelay() -> maxDelay(). (1.16–1.21.5 it is a
+  // regular class with stable intermediary method names, so the legacy jar spans that whole range.)
+  //? if >=1.21.6 {
   @Inject(method = "maxDelay", at = @At("HEAD"), cancellable = true)
   //?} else {
   /*@Inject(method = "getMaxDelay", at = @At("HEAD"), cancellable = true)

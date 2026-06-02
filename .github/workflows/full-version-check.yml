@@ -75,8 +75,8 @@ jobs:
           - { node: "1.16.5",  mc: "1.21.1",  java: "21" }
           - { node: "1.16.5",  mc: "1.21.3",  java: "21" }
           - { node: "1.16.5",  mc: "1.21.4",  java: "21" }
-          # ---- modern jar (built at 1.21.11): record-based Music, covers >=1.21.5 ----
-          - { node: "1.21.11", mc: "1.21.5",  java: "21" }
+          - { node: "1.16.5",  mc: "1.21.5",  java: "21" }
+          # ---- modern jar (built at 1.21.11): record-based Music, covers >=1.21.6 ----
           - { node: "1.21.11", mc: "1.21.6",  java: "21" }
           - { node: "1.21.11", mc: "1.21.7",  java: "21" }
           - { node: "1.21.11", mc: "1.21.8",  java: "21" }
