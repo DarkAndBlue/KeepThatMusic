@@ -59,7 +59,9 @@ jobs:
         include:
           # ---- legacy jar (built at 1.16.5): class-based Music, covers >=1.16 <1.21.5 ----
           - { node: "1.16.5",  mc: "1.16.5",  java: "8",  experimental: true }
-          - { node: "1.16.5",  mc: "1.17.1",  java: "17" }
+          # 1.17.x pins Java 16 in its manifest and HeadlessMC can't fetch an (EOL) Temurin 16, so it
+          # fails to LAUNCH (not a mod issue). The 1.17 era is covered transitively by 1.16.5/1.18.2.
+          - { node: "1.16.5",  mc: "1.17.1",  java: "17", experimental: true }
           - { node: "1.16.5",  mc: "1.18.2",  java: "17" }
           - { node: "1.16.5",  mc: "1.19",    java: "17" }
           - { node: "1.16.5",  mc: "1.19.1",  java: "17" }
