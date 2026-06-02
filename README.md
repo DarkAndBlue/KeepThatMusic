@@ -53,6 +53,12 @@ target's `runClient` is under that subproject's **fabric** group. The headless r
   unnecessary because the few internals the mod touches only change at notable refactors. This
   catches runtime mixin-apply failures a compile check cannot.
 
+`.github/workflows/full-version-check.yml` is a **manual** (`workflow_dispatch`) exhaustive check:
+it boots the correct jar headlessly on **every** supported Minecraft version across 1.16→26.1.x
+(~26 jobs) — a mixin-apply error crashes startup and fails that version's job. Run it from
+**Actions → Full Version Check → Run workflow** before a release. It's manual because spinning up
+~26 headless clients is too heavy for every commit.
+
 ### Downloadable jars
 `.github/workflows/artifacts.yml` builds the three final mod jars and uploads them as
 GitHub Actions artifacts (one per build target, sources excluded). Download them from the **Actions** tab
