@@ -36,8 +36,18 @@ public class KeepThatMusicConfigScreen extends Screen {
       b.setMessage(delayLabel());
     }).bounds(x, y + 24, 200, 20).build());
 
+    addRenderableWidget(Button.builder(joinLabel(), b -> {
+      config.stopMenuMusicOnJoin = !config.stopMenuMusicOnJoin;
+      b.setMessage(joinLabel());
+    }).bounds(x, y + 48, 200, 20).build());
+
+    addRenderableWidget(Button.builder(menuLabel(), b -> {
+      config.stopMusicOnReturnToMenu = !config.stopMusicOnReturnToMenu;
+      b.setMessage(menuLabel());
+    }).bounds(x, y + 72, 200, 20).build());
+
     addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
-        .bounds(x, y + 60, 200, 20).build());
+        .bounds(x, y + 108, 200, 20).build());
   }
 
   private Component enabledLabel() {
@@ -47,6 +57,14 @@ public class KeepThatMusicConfigScreen extends Screen {
   private Component delayLabel() {
     String value = config.maxMusicDelay == -1 ? "Vanilla" : config.maxMusicDelay + " ticks";
     return Component.literal("Max music delay: " + value);
+  }
+
+  private Component joinLabel() {
+    return Component.literal("Stop menu music on join: " + (config.stopMenuMusicOnJoin ? "Yes" : "No"));
+  }
+
+  private Component menuLabel() {
+    return Component.literal("Stop music on return to menu: " + (config.stopMusicOnReturnToMenu ? "Yes" : "No"));
   }
 
   /** Cycles through a few useful presets: Vanilla -> 0 -> 100 -> 1200 -> Vanilla. */

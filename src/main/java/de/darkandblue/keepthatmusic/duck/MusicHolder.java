@@ -8,4 +8,7 @@ import net.minecraft.client.resources.sounds.SoundInstance;
  */
 public interface MusicHolder {
   SoundInstance keepThatMusic$getCurrentMusic();
+
+  /** Clears/sets the current music so the manager starts fresh music on its next tick. */
+  void keepThatMusic$setCurrentMusic(SoundInstance music);
 }

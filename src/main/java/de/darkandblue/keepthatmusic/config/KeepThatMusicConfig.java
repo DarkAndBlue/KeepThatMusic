@@ -28,6 +28,18 @@ public class KeepThatMusicConfig {
   /** Overrides {@code Music#getMaxDelay}. -1 keeps the vanilla per-biome delay. */
   public int maxMusicDelay = -1;
 
+  /**
+   * When true, the (menu) music that was playing is stopped on joining a world, instead of being
+   * kept. Default false: menu music keeps playing in-game until the player opts in.
+   */
+  public boolean stopMenuMusicOnJoin = false;
+
+  /**
+   * When true, the kept music is stopped on returning to the main menu. Default false: the music
+   * keeps playing on the title screen.
+   */
+  public boolean stopMusicOnReturnToMenu = false;
+
   /** Prints mixin tracing to the log. */
   public boolean debug = false;
 

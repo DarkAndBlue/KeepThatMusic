@@ -32,4 +32,9 @@ public class MixinMusicManager implements MusicHolder {
   public SoundInstance keepThatMusic$getCurrentMusic() {
     return currentMusic;
   }
+
+  @Override
+  public void keepThatMusic$setCurrentMusic(SoundInstance music) {
+    this.currentMusic = music;
+  }
 }
