@@ -71,6 +71,11 @@ jobs:
           - { node: "1.16.5",  mc: "1.20.3",  java: "17" }
           - { node: "1.16.5",  mc: "1.20.6",  java: "21" }
           - { node: "1.16.5",  mc: "1.21.1",  java: "21" }
+          # 1.21.2-1.21.4: Music is still a regular class, so the legacy jar covers them.
+          - { node: "1.16.5",  mc: "1.21.2",  java: "21" }
+          - { node: "1.16.5",  mc: "1.21.4",  java: "21" }
+          # 1.21.5: Music became a record -> the modern jar takes over here.
+          - { node: "1.21.11", mc: "1.21.5",  java: "21" }
           - { node: "1.21.11", mc: "1.21.11", java: "21" }
           # Endpoints HeadlessMC may not run headlessly cleanly — visible but non-blocking.
           - { node: "1.16.5",  mc: "1.16.5",  java: "8",  experimental: true }
