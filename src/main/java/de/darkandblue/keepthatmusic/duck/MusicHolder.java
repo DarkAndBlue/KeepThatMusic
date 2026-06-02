@@ -11,4 +11,7 @@ public interface MusicHolder {
 
   /** Clears/sets the current music so the manager starts fresh music on its next tick. */
   void keepThatMusic$setCurrentMusic(SoundInstance music);
+
+  /** Resets the countdown until the next track, so a new delay setting applies immediately. */
+  void keepThatMusic$setNextSongDelay(int ticks);
 }

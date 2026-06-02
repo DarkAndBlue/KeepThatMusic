@@ -20,6 +20,9 @@ public class MixinMusicManager implements MusicHolder {
   @Shadow
   private SoundInstance currentMusic;
 
+  @Shadow
+  private int nextSongDelay;
+
   @Inject(method = "stopPlaying()V", at = @At("HEAD"), cancellable = true)
   private void keepThatMusic$stopPlaying(CallbackInfo ci) {
     if (KeepThatMusic.config().enabled) {
@@ -36,5 +39,10 @@ public class MixinMusicManager implements MusicHolder {
   @Override
   public void keepThatMusic$setCurrentMusic(SoundInstance music) {
     this.currentMusic = music;
+  }
+
+  @Override
+  public void keepThatMusic$setNextSongDelay(int ticks) {
+    this.nextSongDelay = ticks;
   }
 }

@@ -3,7 +3,7 @@
 mod.id = "keepthatmusic"
 mod.name = "Keep That Music"
 mod.group = "de.darkandblue.keepthatmusic"
-mod.version = "1.0.0"
+mod.version = "1.0.1"
 
 # Loom-back-compat picks the correct Loom variant per Minecraft version from this base.
 loomx.loom_version = "1.16-SNAPSHOT"

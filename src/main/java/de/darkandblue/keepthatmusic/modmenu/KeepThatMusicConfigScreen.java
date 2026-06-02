@@ -2,7 +2,9 @@
 package de.darkandblue.keepthatmusic.modmenu;
 
 import de.darkandblue.keepthatmusic.config.KeepThatMusicConfig;
+import de.darkandblue.keepthatmusic.duck.MusicHolder;
 import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
@@ -29,22 +31,36 @@ public class KeepThatMusicConfigScreen extends Screen {
     addRenderableWidget(Button.builder(enabledLabel(), b -> {
       config.enabled = !config.enabled;
       b.setMessage(enabledLabel());
-    }).bounds(x, y, 200, 20).build());
+    }).bounds(x, y, 200, 20)
+        .tooltip(Tooltip.create(Component.literal(
+            "Master switch. When off, the mod does nothing and vanilla music behaviour returns.")))
+        .build());
 
     addRenderableWidget(Button.builder(delayLabel(), b -> {
       config.maxMusicDelay = cycleDelay(config.maxMusicDelay);
       b.setMessage(delayLabel());
-    }).bounds(x, y + 24, 200, 20).build());
+      applyDelayNow();
+    }).bounds(x, y + 24, 200, 20)
+        .tooltip(Tooltip.create(Component.literal(
+            "Fixed delay between music tracks, in ticks (20 ticks = 1 second). "
+                + "Vanilla = use Minecraft's normal random delay.")))
+        .build());
 
     addRenderableWidget(Button.builder(joinLabel(), b -> {
       config.stopMenuMusicOnJoin = !config.stopMenuMusicOnJoin;
       b.setMessage(joinLabel());
-    }).bounds(x, y + 48, 200, 20).build());
+    }).bounds(x, y + 48, 200, 20)
+        .tooltip(Tooltip.create(Component.literal(
+            "When you join a world, stop the menu music instead of keeping it playing in-game.")))
+        .build());
 
     addRenderableWidget(Button.builder(menuLabel(), b -> {
       config.stopMusicOnReturnToMenu = !config.stopMusicOnReturnToMenu;
       b.setMessage(menuLabel());
-    }).bounds(x, y + 72, 200, 20).build());
+    }).bounds(x, y + 72, 200, 20)
+        .tooltip(Tooltip.create(Component.literal(
+            "When you return to the main menu, stop the music that was kept playing.")))
+        .build());
 
     addRenderableWidget(Button.builder(Component.literal("Done"), b -> onClose())
         .bounds(x, y + 108, 200, 20).build());
@@ -56,7 +72,7 @@ public class KeepThatMusicConfigScreen extends Screen {
 
   private Component delayLabel() {
     String value = config.maxMusicDelay == -1 ? "Vanilla" : config.maxMusicDelay + " ticks";
-    return Component.literal("Max music delay: " + value);
+    return Component.literal("Music delay: " + value);
   }
 
   private Component joinLabel() {
@@ -74,6 +90,19 @@ public class KeepThatMusicConfigScreen extends Screen {
       case 0: return 100;
       case 100: return 1200;
       default: return -1;
+    }
+  }
+
+  /**
+   * Applies the new delay to the music manager's countdown right away, so the change takes effect
+   * immediately (rather than waiting out the old, possibly very long, countdown). If music is
+   * already playing, the new delay applies to the next track. Vanilla (-1) restarts the countdown
+   * at 0 so the next track comes soon and then resumes vanilla random timing.
+   */
+  private void applyDelayNow() {
+    if (minecraft != null && minecraft.getMusicManager() != null) {
+      int ticks = config.maxMusicDelay == -1 ? 0 : config.maxMusicDelay;
+      ((MusicHolder) minecraft.getMusicManager()).keepThatMusic$setNextSongDelay(ticks);
     }
   }
 
