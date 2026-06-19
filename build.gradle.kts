@@ -44,6 +44,16 @@ dependencies {
     val modmenu = sc.properties.rawOrNull("deps", "modmenu")
     if (modmenu != null) {
         modCompileOnly("maven.modrinth:modmenu:$modmenu") { isTransitive = false }
+        // modLocalRuntime is dev-only: it puts Mod Menu on the runClient classpath (so you can open
+        // the config screen and test the buttons in-game) without adding it to the published jar.
+        modLocalRuntime("maven.modrinth:modmenu:$modmenu") { isTransitive = false }
+    }
+
+    // Mod Menu depends on Fabric API at runtime, so the dev client needs it too. Local-runtime only,
+    // pinned per node (deps.fabric_api) — never compiled against and never in the published jar.
+    val fabricApi = sc.properties.rawOrNull("deps", "fabric_api")
+    if (fabricApi != null) {
+        modLocalRuntime("net.fabricmc.fabric-api:fabric-api:$fabricApi")
     }
 }
 

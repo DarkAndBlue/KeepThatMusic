@@ -14,7 +14,7 @@ concurrency:
 jobs:
   # ---------------------------------------------------------------------------
   # Compile + mixin-processing + remap for every supported version.
-  # This is the "does it build" gate across the whole 1.16.5 -> 26.1.2 span.
+  # This is the "does it build" gate across the whole 1.16.5 -> 26.2 span.
   # ---------------------------------------------------------------------------
   build:
     name: build ${{ matrix.node }}
@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ "1.16.5", "1.21.11", "26.1" ]
+        node: [ "1.16.5", "1.21.11", "26.1", "26.2" ]
     steps:
       - uses: actions/checkout@v4
 
@@ -81,6 +81,7 @@ jobs:
           # Endpoints HeadlessMC may not run headlessly cleanly — visible but non-blocking.
           - { node: "1.16.5",  mc: "1.16.5",  java: "8",  experimental: true }
           - { node: "26.1",    mc: "26.1.2",  java: "25", experimental: true }
+          - { node: "26.2",    mc: "26.2",    java: "25", experimental: true }
     continue-on-error: ${{ matrix.experimental == true }}
     steps:
       - uses: actions/checkout@v4

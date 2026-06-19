@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [ "1.16.5", "1.21.11", "26.1" ]
+        node: [ "1.16.5", "1.21.11", "26.1", "26.2" ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
@@ -88,6 +88,8 @@ jobs:
           - { node: "26.1",    mc: "26.1",    java: "25", experimental: true }
           - { node: "26.1",    mc: "26.1.1",  java: "25", experimental: true }
           - { node: "26.1",    mc: "26.1.2",  java: "25", experimental: true }
+          # ---- 26.2 jar: official mappings, screen-setting moved to Minecraft.gui.setScreen() ----
+          - { node: "26.2",    mc: "26.2",    java: "25", experimental: true }
     # Oldest/newest versions can have headless quirks unrelated to the mod — visible but non-blocking.
     continue-on-error: ${{ matrix.experimental == true }}
     steps:

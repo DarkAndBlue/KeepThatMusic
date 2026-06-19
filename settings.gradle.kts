@@ -23,8 +23,10 @@ stonecutter {
         //              version-stable Fabric intermediary mappings (like the original mod did).
         //   1.21.11 -> the modern 1.21 line (Music record + pause() removal), with config screen.
         //   26.1    -> the un-obfuscated era (official mappings), with config screen.
+        //   26.2    -> 26.2 moved screen-setting to Minecraft.gui.setScreen(); separate jar.
         versions("1.16.5", "1.21.11")
         version("26.1", "26.1.2")
+        version("26.2", "26.2")
         // Default node to develop/iterate against (a modern node so the config screen is active).
         vcsVersion = "1.21.11"
     }

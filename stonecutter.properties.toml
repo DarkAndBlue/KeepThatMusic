@@ -32,9 +32,22 @@ deps.modmenu = "1.16.23"
 mod.mc_compat = ">=1.21.6 <1.22"
 deps.fabric_loader = "0.17.2"
 deps.modmenu = "16.0.0"
+# Local-runtime only (not in the published jar): lets `runClient` open the config screen via Mod
+# Menu to test the buttons in-game. Mod Menu needs Fabric API at runtime.
+deps.fabric_api = "0.141.4+1.21.11"
 
 ["26.1"]
 mod.mc_compat = "~26.1"
 deps.fabric_loader = "0.19.2"
 # 26.1 is unobfuscated: only a Mod Menu build compiled against official 26.1 mappings will work.
 deps.modmenu = "18.0.0-beta.1"
+deps.fabric_api = "0.152.1+26.1.2"
+
+# 26.2 moved screen-setting from Minecraft.setScreen() to Minecraft.gui.setScreen() (see the
+# //? if >=26.2 branch in KeepThatMusicConfigScreen), so it needs its own jar. Like 26.1 it is
+# unobfuscated, so it needs a Mod Menu build compiled against official 26.2 mappings.
+["26.2"]
+mod.mc_compat = "~26.2"
+deps.fabric_loader = "0.19.3"
+deps.modmenu = "20.0.0-beta.3"
+deps.fabric_api = "0.152.2+26.2"

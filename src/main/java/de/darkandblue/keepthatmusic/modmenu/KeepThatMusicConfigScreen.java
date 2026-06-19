@@ -110,7 +110,13 @@ public class KeepThatMusicConfigScreen extends Screen {
   public void onClose() {
     config.save();
     if (minecraft != null) {
+      // 26.2 moved screen-setting off Minecraft onto its Gui (Minecraft.setScreen ->
+      // Minecraft.gui.setScreen), so the old call no-ops there and "Done" can't close the screen.
+      //? if >=26.2 {
+      /*minecraft.gui.setScreen(parent);*/
+      //?} else {
       minecraft.setScreen(parent);
+      //?}
     }
   }
 }
